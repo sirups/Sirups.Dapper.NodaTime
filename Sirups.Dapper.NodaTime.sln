@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# 
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{62B5CEB5-1222-44C4-878F-60EB723F7F49}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sirups.Dapper.NodaTime", "src\Sirups.Dapper.NodaTime\Sirups.Dapper.NodaTime.csproj", "{11AC5F46-E9FB-43BF-A153-2B7CD29B2E64}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{7A099120-E3C6-4B52-86C9-E8153F07885A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sirups.Dapper.NodaTime.Tests", "test\Sirups.Dapper.NodaTime.Tests\Sirups.Dapper.NodaTime.Tests.csproj", "{A40E378E-2F2B-4FBD-9CCE-4799955F4873}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{11AC5F46-E9FB-43BF-A153-2B7CD29B2E64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11AC5F46-E9FB-43BF-A153-2B7CD29B2E64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11AC5F46-E9FB-43BF-A153-2B7CD29B2E64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11AC5F46-E9FB-43BF-A153-2B7CD29B2E64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A40E378E-2F2B-4FBD-9CCE-4799955F4873}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A40E378E-2F2B-4FBD-9CCE-4799955F4873}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A40E378E-2F2B-4FBD-9CCE-4799955F4873}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A40E378E-2F2B-4FBD-9CCE-4799955F4873}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{11AC5F46-E9FB-43BF-A153-2B7CD29B2E64} = {62B5CEB5-1222-44C4-878F-60EB723F7F49}
+		{A40E378E-2F2B-4FBD-9CCE-4799955F4873} = {7A099120-E3C6-4B52-86C9-E8153F07885A}
+	EndGlobalSection
+EndGlobal

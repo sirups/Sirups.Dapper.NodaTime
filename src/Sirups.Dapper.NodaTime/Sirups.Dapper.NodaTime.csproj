@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>Sirups.Dapper.NodaTime</PackageId>
+    <Authors>CoolMcGrrr</Authors>
+    <Title>Sirups.Dapper.NodaTime</Title>
+    <Description>An adapter to allow using NodaTime with Dapper.
+      Supports Duration, Instant, LocalDate, LocalTime, OffsetTime and Period.</Description>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/sirups/Sirups.Dapper.NodaTime</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>dapper;nodatime</PackageTags>
+    <PackageIcon>
+      Sirups.png
+    </PackageIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.4" />
+    <PackageReference Include="NodaTime" Version="2.3.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Sirups.png" Pack="true" PackagePath="\" />
+  </ItemGroup>
+</Project>
