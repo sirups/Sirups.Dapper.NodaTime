@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Threading.Tasks;
 using NodaTime;
 using Sirups.Dapper.NodaTime.TypeHandlers;
 using Xunit;
@@ -9,7 +8,7 @@ using Xunit;
 namespace Sirups.Dapper.NodaTime.Tests.TypeHandlers {
 	public class LocalTimeTypeHandlerTests {
 		[Fact]
-		public async Task ProperlySetsValue() {
+		public void ProperlySetsValue() {
 			//Arrange
 			IDbDataParameter parameter = new DbDataParameterStub();
 			LocalTime localTime = LocalTime.FromHourMinuteSecondTick(10, 20, 0, 0);
@@ -22,7 +21,7 @@ namespace Sirups.Dapper.NodaTime.Tests.TypeHandlers {
 		}
 
 		[Fact]
-		public async Task ProperlyParsesValue() {
+		public void ProperlyParsesValue() {
 			//Arrange
 			LocalTime localTime = LocalTime.FromHourMinuteSecondTick(10, 20, 0, 0);
 
@@ -34,7 +33,7 @@ namespace Sirups.Dapper.NodaTime.Tests.TypeHandlers {
 		}
 
 		[Fact]
-		public async Task ThrowsNotImplementedOnInvalidType() {
+		public void ThrowsNotImplementedOnInvalidType() {
 			//Arrange
 			List<object> types = new List<object> {
 				DateTime.Now

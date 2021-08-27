@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Threading.Tasks;
 using NodaTime;
 using Sirups.Dapper.NodaTime.TypeHandlers;
 using Xunit;
@@ -9,7 +8,7 @@ using Xunit;
 namespace Sirups.Dapper.NodaTime.Tests.TypeHandlers {
 	public class LocalDateTypeHandlerTests {
 		[Fact]
-		public async Task ProperlySetsValue() {
+		public void ProperlySetsValue() {
 			//Arrange
 			LocalDate localDate = LocalDate.FromYearMonthWeekAndDay(2020, 2, 1, IsoDayOfWeek.Monday);
 			IDbDataParameter parameter = new DbDataParameterStub();
@@ -22,7 +21,7 @@ namespace Sirups.Dapper.NodaTime.Tests.TypeHandlers {
 		}
 
 		[Fact]
-		public async Task ParsesSupportedType() {
+		public void ParsesSupportedType() {
 			//Arrange
 			LocalDate localDate = LocalDate.FromYearMonthWeekAndDay(2020, 2, 1, IsoDayOfWeek.Monday);
 
@@ -34,7 +33,7 @@ namespace Sirups.Dapper.NodaTime.Tests.TypeHandlers {
 		}
 
 		[Fact]
-		public async Task ThrowsNotImplementedOnUnspportedTypes() {
+		public void ThrowsNotImplementedOnUnspportedTypes() {
 			//Arrange
 			List<object> types = new List<object> {
 				DateTime.Now,

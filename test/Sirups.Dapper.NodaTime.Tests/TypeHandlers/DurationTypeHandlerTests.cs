@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Threading.Tasks;
 using NodaTime;
 using Sirups.Dapper.NodaTime.TypeHandlers;
 using Xunit;
@@ -9,7 +8,7 @@ using Xunit;
 namespace Sirups.Dapper.NodaTime.Tests.TypeHandlers {
 	public class DurationTypeHandlerTests {
 		[Fact]
-		public async Task SetsTheParameterValue() {
+		public void SetsTheParameterValue() {
 			//Arrange
 			IDbDataParameter parameter = new DbDataParameterStub();
 
@@ -23,7 +22,7 @@ namespace Sirups.Dapper.NodaTime.Tests.TypeHandlers {
 		}
 
 		[Fact]
-		public async Task ProperlyHandlesPeriodToDuration() {
+		public void ProperlyHandlesPeriodToDuration() {
 			//Arrange
 			Period period = Period.FromHours(23);
 
@@ -35,7 +34,7 @@ namespace Sirups.Dapper.NodaTime.Tests.TypeHandlers {
 		}
 
 		[Fact]
-		public async Task ThrowsNotImplementedOnInvalidType() {
+		public void ThrowsNotImplementedOnInvalidType() {
 			//Arrange
 			List<object> objectTypes = new List<object> {
 				Duration.FromHours(23),

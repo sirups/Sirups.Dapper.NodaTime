@@ -9,7 +9,7 @@ using Xunit;
 namespace Sirups.Dapper.NodaTime.Tests.TypeHandlers {
 	public class PeriodTypeHandlerTests {
 		[Fact]
-		public async Task SetsTheParameterValue() {
+		public void SetsTheParameterValue() {
 			//Arrange
 			IDbDataParameter parameter = new DbDataParameterStub();
 			Period period = Period.FromDays(3);
@@ -22,7 +22,7 @@ namespace Sirups.Dapper.NodaTime.Tests.TypeHandlers {
 		}
 
 		[Fact]
-		public async Task ProperlySetsValue() {
+		public void ProperlySetsValue() {
 			//Arrange
 			Period period = Period.FromDays(3);
 
@@ -34,7 +34,7 @@ namespace Sirups.Dapper.NodaTime.Tests.TypeHandlers {
 		}
 
 		[Fact]
-		public async Task ThrowsNotImplementedOnInvalidType() {
+		public void ThrowsNotImplementedOnInvalidType() {
 			//Arrange
 			List<object> objectTypes = new List<object> {
 				Duration.FromHours(23),

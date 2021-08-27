@@ -9,7 +9,7 @@ using Xunit;
 namespace Sirups.Dapper.NodaTime.Tests.TypeHandlers {
 	public class InstantTypeHandlerTests {
 		[Fact]
-		public async Task ProperlySetsValue() {
+		public void ProperlySetsValue() {
 			//Arrange
 			IDbDataParameter parameter = new DbDataParameterStub();
 			Instant instant = Instant.FromUtc(2021, 1, 21, 22, 0);
@@ -22,7 +22,7 @@ namespace Sirups.Dapper.NodaTime.Tests.TypeHandlers {
 		}
 
 		[Fact]
-		public async Task ProperlyParsesValue() {
+		public void ProperlyParsesValue() {
 			//Arrange
 			Instant instant = Instant.FromUtc(2021, 1, 21, 22, 0);
 
@@ -34,7 +34,7 @@ namespace Sirups.Dapper.NodaTime.Tests.TypeHandlers {
 		}
 
 		[Fact]
-		public async Task ThrowsNotImplementedOnUnsupportedTypes() {
+		public void ThrowsNotImplementedOnUnsupportedTypes() {
 			//Arrange
 			List<object> objectTypes = new List<object> {
 				DateTime.Now,
