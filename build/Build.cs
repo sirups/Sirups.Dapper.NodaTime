@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Nuke.Common;
 using Nuke.Common.CI;
 using Nuke.Common.CI.GitHubActions;
@@ -13,13 +14,15 @@ using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 
+[ExcludeFromCodeCoverage]
 [CheckBuildProjectConfigurations]
 [ShutdownDotNetAfterServerBuild]
 [GitHubActions("continuous", GitHubActionsImage.UbuntuLatest, On = new[] { GitHubActionsTrigger.Push },
 	InvokedTargets = new[] { nameof(Test) })]
 [GitHubActions("release", GitHubActionsImage.UbuntuLatest,
-	OnPushTags = new [] { @"\d+\.\d+\.\d+"},
-	OnPushBranches = new[] { "release" }, InvokedTargets = new[] { nameof(CreateNugetPackage) },
+	OnPushTags = new[] { @"\d+\.\d+\.\d+" },
+	OnPushBranches = new[] { "release" },
+	InvokedTargets = new[] { nameof(CreateNugetPackage) },
 	PublishArtifacts = true, ImportSecrets = new[] { "NUGETAPIKEY" })]
 class Build : NukeBuild {
 	/// Support plugins are available for:
@@ -86,7 +89,8 @@ class Build : NukeBuild {
 			);
 		});
 
-	AbsolutePath NugetPackageFullPath => OutputDirectory / $"{Solution.src.Sirups_Dapper_NodaTime.Name}.{GitVersion.SemVer}.nupkg";
+	AbsolutePath NugetPackageFullPath =>
+		OutputDirectory / $"{Solution.src.Sirups_Dapper_NodaTime.Name}.{GitVersion.SemVer}.nupkg";
 
 	Target CreateNugetPackage => _ => _
 		.DependsOn(Compile)
