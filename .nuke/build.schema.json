@@ -113,10 +113,6 @@
             "Quiet",
             "Verbose"
           ]
-        },
-        "Version": {
-          "type": "string",
-          "description": "Version of the package to produce"
         }
       }
     }

@@ -1,16 +1,25 @@
+using System.Collections.Generic;
 using Nuke.Common;
 using Nuke.Common.CI;
+using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.Execution;
 using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
+using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
+using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 
 [CheckBuildProjectConfigurations]
 [ShutdownDotNetAfterServerBuild]
+[GitHubActions("continuous", GitHubActionsImage.UbuntuLatest, On = new[] { GitHubActionsTrigger.Push },
+	InvokedTargets = new[] { nameof(Test) })]
+[GitHubActions("release", GitHubActionsImage.UbuntuLatest,
+	OnPushBranches = new[] { "release" }, InvokedTargets = new[] { nameof(CreateNugetPackage) },
+	PublishArtifacts = true, ImportSecrets = new[] { "NUGETAPIKEY" })]
 class Build : NukeBuild {
 	/// Support plugins are available for:
 	///   - JetBrains ReSharper        https://nuke.build/resharper
@@ -22,11 +31,11 @@ class Build : NukeBuild {
 	[Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
 	readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
 
-	[Parameter("Version of the package to produce")] readonly string Version = "0.1.0";
 	[Secret] [Parameter("The ApiKey for nuget.org")] readonly string NugetApiKey = "";
 
 	[Solution(GenerateProjects = true)] readonly Solution Solution;
 	[GitRepository] readonly GitRepository GitRepository;
+	[GitVersion(NoFetch = true)] readonly GitVersion GitVersion;
 
 	AbsolutePath SourceDirectory => RootDirectory / "src";
 	AbsolutePath TestsDirectory => RootDirectory / "test";
@@ -58,23 +67,29 @@ class Build : NukeBuild {
 				.EnableNoRestore());
 		});
 
+	AbsolutePath TestResultDirectory => OutputDirectory / "testresults";
+	IEnumerable<Project> TestProjects => Solution.GetProjects("*.Tests");
+
 	Target Test => _ => _
 		.DependsOn(Compile)
+		.Produces(TestResultDirectory / "*.trx")
 		.Executes(() =>
 		{
-			DotNetTest(s => s
+			DotNetTest(_ => _
 				.SetProjectFile(Solution)
 				.SetConfiguration(Configuration)
 				.EnableNoRestore()
+				.CombineWith(TestProjects, (_, p) => _
+					.SetProjectFile(p)
+					.SetLoggers($"trx;LogFileName={TestResultDirectory / p.Name}.trx"))
 			);
 		});
 
-	const string NugetProjectName = "Sirups.Dapper.NodaTime";
-	AbsolutePath NugetPackageFullPath => OutputDirectory / $"{NugetProjectName}.{Version}.nupkg";
+	AbsolutePath NugetPackageFullPath => OutputDirectory / $"{Solution.src.Sirups_Dapper_NodaTime.Name}.{GitVersion.SemVer}.nupkg";
 
 	Target CreateNugetPackage => _ => _
 		.DependsOn(Compile)
-		.Produces(OutputDirectory + $"{NugetProjectName}.*nupgk")
+		.Produces(OutputDirectory / "*.nupkg")
 		.Executes(() =>
 		{
 			DotNetPack(_ => _
@@ -85,7 +100,7 @@ class Build : NukeBuild {
 				.SetOutputDirectory(OutputDirectory)
 				.EnableIncludeSource()
 				.EnableIncludeSymbols()
-				.SetVersion(Version));
+				.SetVersion(GitVersion.SemVer));
 		});
 
 	Target PushNugetPackage => _ => _
