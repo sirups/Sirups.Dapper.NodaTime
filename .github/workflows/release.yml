@@ -20,6 +20,8 @@ on:
   push:
     branches:
       - release
+    tags:
+      - \d+\.\d+\.\d+
 
 jobs:
   ubuntu-latest:

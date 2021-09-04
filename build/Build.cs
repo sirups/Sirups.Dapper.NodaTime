@@ -18,6 +18,7 @@ using static Nuke.Common.Tools.DotNet.DotNetTasks;
 [GitHubActions("continuous", GitHubActionsImage.UbuntuLatest, On = new[] { GitHubActionsTrigger.Push },
 	InvokedTargets = new[] { nameof(Test) })]
 [GitHubActions("release", GitHubActionsImage.UbuntuLatest,
+	OnPushTags = new [] { @"\d+\.\d+\.\d+"},
 	OnPushBranches = new[] { "release" }, InvokedTargets = new[] { nameof(CreateNugetPackage) },
 	PublishArtifacts = true, ImportSecrets = new[] { "NUGETAPIKEY" })]
 class Build : NukeBuild {
